@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "autoneologism": "aaronjameslang/autoneologism",
+    "browserify": "^14.4.0",
+    "elm": "^0.18.0"
+  }
+}
