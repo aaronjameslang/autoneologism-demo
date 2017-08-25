@@ -1,5 +1,7 @@
 port module Autoneologism exposing (Result, generateWords, generatedWords)
 
+import Json.Decode exposing (..) -- Hack
+
 type alias Result =
     { attempts: Int
     , efficiency: Float
