@@ -1,6 +1,9 @@
-port module Autoneologism exposing (Result, generateWords, generatedWords)
+port module Autoneologism exposing (Params, Result, generateWords, generatedWords)
 
 import Json.Decode exposing (..) -- Hack
+
+type alias Params =
+    { words: List String }
 
 type alias Result =
     { attempts: Int
@@ -8,8 +11,5 @@ type alias Result =
     , words: List String
 }
 
-port generateWords : List String -> Cmd msg
-
+port generateWords : Params -> Cmd msg
 port generatedWords: (Result -> msg) -> Sub msg
-
-

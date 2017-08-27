@@ -15,11 +15,9 @@ main =
 -- MODEL
 
 type alias Model =
-    { textIn : TextIn
-    , anlResult : Maybe Anl.Result
+    { params : Anl.Params
+    , result : Maybe Anl.Result
 }
-
-type alias TextIn = String
 
 init : (Model, Cmd msg)
 init =
@@ -27,20 +25,26 @@ init =
     initialMsg : Msg
     initialMsg = TextInMsg "another open penmanship answer"
     emptyModel : Model
-    emptyModel = Model "" Nothing
+    emptyModel = Model ( Anl.Params [] ) Nothing
   in
     update initialMsg emptyModel
 
 
 -- UPDATE
 
-type Msg = TextInMsg TextIn | AnlResultMsg Anl.Result
+type Msg = TextInMsg String | AnlResultMsg Anl.Result
 
 update : Msg -> Model -> (Model, Cmd msg)
 update msg model =
   case msg of
-    TextInMsg textIn -> (Model textIn Nothing, Anl.generateWords (String.words textIn))
-    AnlResultMsg anlResult -> ({ model | anlResult = Just anlResult }, Cmd.none)
+    TextInMsg textIn ->
+        ( Model { words = String.words textIn } Nothing
+        , Anl.generateWords { words = String.words textIn }
+      )
+    AnlResultMsg result ->
+      ({ model | result = Just result }
+      , Cmd.none
+    )
 
 -- VIEW
 
@@ -48,9 +52,9 @@ view : Model -> Html Msg
 view model =
   div [] [
     Html.form [] [
-      Html.textarea [ cols 100, rows 20, onInput TextInMsg ] [ text model.textIn ]
+      Html.textarea [ cols 100, rows 20, onInput TextInMsg ] [ text <| String.join " " model.params.words ]
     ],
-    resultView model.anlResult
+    resultView model.result
   ]
 
 resultView: Maybe Anl.Result -> Html msg

@@ -5761,10 +5761,12 @@ var _elm_lang$core$Platform$Router = {ctor: 'Router'};
 var _aaronjameslang$autoneologism_demo$Autoneologism$generateWords = _elm_lang$core$Native_Platform.outgoingPort(
 	'generateWords',
 	function (v) {
-		return _elm_lang$core$Native_List.toArray(v).map(
-			function (v) {
-				return v;
-			});
+		return {
+			words: _elm_lang$core$Native_List.toArray(v.words).map(
+				function (v) {
+					return v;
+				})
+		};
 	});
 var _aaronjameslang$autoneologism_demo$Autoneologism$generatedWords = _elm_lang$core$Native_Platform.incomingPort(
 	'generatedWords',
@@ -5788,6 +5790,9 @@ var _aaronjameslang$autoneologism_demo$Autoneologism$generatedWords = _elm_lang$
 				A2(_elm_lang$core$Json_Decode$field, 'efficiency', _elm_lang$core$Json_Decode$float));
 		},
 		A2(_elm_lang$core$Json_Decode$field, 'attempts', _elm_lang$core$Json_Decode$int)));
+var _aaronjameslang$autoneologism_demo$Autoneologism$Params = function (a) {
+	return {words: a};
+};
 var _aaronjameslang$autoneologism_demo$Autoneologism$Result = F3(
 	function (a, b, c) {
 		return {attempts: a, efficiency: b, words: c};
@@ -8376,7 +8381,7 @@ var _aaronjameslang$autoneologism_demo$Main$resultView = function (anlResult) {
 };
 var _aaronjameslang$autoneologism_demo$Main$Model = F2(
 	function (a, b) {
-		return {textIn: a, anlResult: b};
+		return {params: a, result: b};
 	});
 var _aaronjameslang$autoneologism_demo$Main$update = F2(
 	function (msg, model) {
@@ -8385,9 +8390,16 @@ var _aaronjameslang$autoneologism_demo$Main$update = F2(
 			var _p3 = _p2._0;
 			return {
 				ctor: '_Tuple2',
-				_0: A2(_aaronjameslang$autoneologism_demo$Main$Model, _p3, _elm_lang$core$Maybe$Nothing),
+				_0: A2(
+					_aaronjameslang$autoneologism_demo$Main$Model,
+					{
+						words: _elm_lang$core$String$words(_p3)
+					},
+					_elm_lang$core$Maybe$Nothing),
 				_1: _aaronjameslang$autoneologism_demo$Autoneologism$generateWords(
-					_elm_lang$core$String$words(_p3))
+					{
+						words: _elm_lang$core$String$words(_p3)
+					})
 			};
 		} else {
 			return {
@@ -8395,7 +8407,7 @@ var _aaronjameslang$autoneologism_demo$Main$update = F2(
 				_0: _elm_lang$core$Native_Utils.update(
 					model,
 					{
-						anlResult: _elm_lang$core$Maybe$Just(_p2._0)
+						result: _elm_lang$core$Maybe$Just(_p2._0)
 					}),
 				_1: _elm_lang$core$Platform_Cmd$none
 			};
@@ -8408,7 +8420,11 @@ var _aaronjameslang$autoneologism_demo$Main$TextInMsg = function (a) {
 	return {ctor: 'TextInMsg', _0: a};
 };
 var _aaronjameslang$autoneologism_demo$Main$init = function () {
-	var emptyModel = A2(_aaronjameslang$autoneologism_demo$Main$Model, '', _elm_lang$core$Maybe$Nothing);
+	var emptyModel = A2(
+		_aaronjameslang$autoneologism_demo$Main$Model,
+		_aaronjameslang$autoneologism_demo$Autoneologism$Params(
+			{ctor: '[]'}),
+		_elm_lang$core$Maybe$Nothing);
 	var initialMsg = _aaronjameslang$autoneologism_demo$Main$TextInMsg('another open penmanship answer');
 	return A2(_aaronjameslang$autoneologism_demo$Main$update, initialMsg, emptyModel);
 }();
@@ -8440,14 +8456,15 @@ var _aaronjameslang$autoneologism_demo$Main$view = function (model) {
 						},
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html$text(model.textIn),
+							_0: _elm_lang$html$Html$text(
+								A2(_elm_lang$core$String$join, ' ', model.params.words)),
 							_1: {ctor: '[]'}
 						}),
 					_1: {ctor: '[]'}
 				}),
 			_1: {
 				ctor: '::',
-				_0: _aaronjameslang$autoneologism_demo$Main$resultView(model.anlResult),
+				_0: _aaronjameslang$autoneologism_demo$Main$resultView(model.result),
 				_1: {ctor: '[]'}
 			}
 		});
@@ -8766,8 +8783,8 @@ const anl = require('autoneologism')
 
 const app = Elm.Main.fullscreen()
 
-app.ports.generateWords.subscribe(wordsIn => {
-  const result = anl.generateWords(wordsIn);
+app.ports.generateWords.subscribe(params => {
+  const result = anl.generateWords(params.words);
   app.ports.generatedWords.send(result);
 });
 
