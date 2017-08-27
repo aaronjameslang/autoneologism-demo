@@ -58,9 +58,12 @@ resultView anlResult =
   case anlResult of
     Nothing -> p [] [text "Caculating"]
     Just result -> div []
-      [ p [] [text ("Efficiency " ++ floatToPercentage result.efficiency)]
+      [ p [efficiencyColourAttribute result.efficiency] [text ("Efficiency " ++ floatToPercentage result.efficiency)]
       , p [] [text <| String.join " " result.words]
     ]
 
 floatToPercentage: Float -> String
 floatToPercentage f = String.left 2 (toString <| f * 100)  ++ "%"
+
+efficiencyColourAttribute : Float -> Html.Attribute msg
+efficiencyColourAttribute f = Html.Attributes.style [("background-color", "hsl(" ++ toString(round <| f*360) ++ ", 100%, 75%)")]

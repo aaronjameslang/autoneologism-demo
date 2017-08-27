@@ -8296,6 +8296,25 @@ var _elm_lang$html$Html_Events$Options = F2(
 		return {stopPropagation: a, preventDefault: b};
 	});
 
+var _aaronjameslang$autoneologism_demo$Main$efficiencyColourAttribute = function (f) {
+	return _elm_lang$html$Html_Attributes$style(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'background-color',
+				_1: A2(
+					_elm_lang$core$Basics_ops['++'],
+					'hsl(',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(
+							_elm_lang$core$Basics$round(f * 360)),
+						', 100%, 75%)'))
+			},
+			_1: {ctor: '[]'}
+		});
+};
 var _aaronjameslang$autoneologism_demo$Main$floatToPercentage = function (f) {
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
@@ -8325,7 +8344,11 @@ var _aaronjameslang$autoneologism_demo$Main$resultView = function (anlResult) {
 				ctor: '::',
 				_0: A2(
 					_elm_lang$html$Html$p,
-					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _aaronjameslang$autoneologism_demo$Main$efficiencyColourAttribute(_p1.efficiency),
+						_1: {ctor: '[]'}
+					},
 					{
 						ctor: '::',
 						_0: _elm_lang$html$Html$text(
