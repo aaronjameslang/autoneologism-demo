@@ -6,4 +6,4 @@ node_js:
 matrix:
   allow_failures:
     - node_js: node
-script: make
+script: make && git diff --exit-code
