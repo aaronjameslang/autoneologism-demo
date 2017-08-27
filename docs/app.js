@@ -8320,18 +8320,27 @@ var _aaronjameslang$autoneologism_demo$Main$efficiencyColourAttribute = function
 			_1: {ctor: '[]'}
 		});
 };
-var _aaronjameslang$autoneologism_demo$Main$floatToPercentage = function (f) {
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		A2(
-			_elm_lang$core$String$left,
-			2,
-			_elm_lang$core$Basics$toString(f * 100)),
-		'%');
+var _aaronjameslang$autoneologism_demo$Main$floatToPercentage = function (_p0) {
+	return A3(
+		_elm_lang$core$Basics$flip,
+		F2(
+			function (x, y) {
+				return A2(_elm_lang$core$Basics_ops['++'], x, y);
+			}),
+		'%',
+		_elm_lang$core$Basics$toString(
+			_elm_lang$core$Basics$round(
+				A2(
+					F2(
+						function (x, y) {
+							return x * y;
+						}),
+					100,
+					_p0))));
 };
 var _aaronjameslang$autoneologism_demo$Main$resultView = function (anlResult) {
-	var _p0 = anlResult;
-	if (_p0.ctor === 'Nothing') {
+	var _p1 = anlResult;
+	if (_p1.ctor === 'Nothing') {
 		return A2(
 			_elm_lang$html$Html$p,
 			{ctor: '[]'},
@@ -8341,7 +8350,7 @@ var _aaronjameslang$autoneologism_demo$Main$resultView = function (anlResult) {
 				_1: {ctor: '[]'}
 			});
 	} else {
-		var _p1 = _p0._0;
+		var _p2 = _p1._0;
 		return A2(
 			_elm_lang$html$Html$div,
 			{ctor: '[]'},
@@ -8351,7 +8360,7 @@ var _aaronjameslang$autoneologism_demo$Main$resultView = function (anlResult) {
 					_elm_lang$html$Html$p,
 					{
 						ctor: '::',
-						_0: _aaronjameslang$autoneologism_demo$Main$efficiencyColourAttribute(_p1.efficiency),
+						_0: _aaronjameslang$autoneologism_demo$Main$efficiencyColourAttribute(_p2.efficiency),
 						_1: {ctor: '[]'}
 					},
 					{
@@ -8360,7 +8369,7 @@ var _aaronjameslang$autoneologism_demo$Main$resultView = function (anlResult) {
 							A2(
 								_elm_lang$core$Basics_ops['++'],
 								'Efficiency ',
-								_aaronjameslang$autoneologism_demo$Main$floatToPercentage(_p1.efficiency))),
+								_aaronjameslang$autoneologism_demo$Main$floatToPercentage(_p2.efficiency))),
 						_1: {ctor: '[]'}
 					}),
 				_1: {
@@ -8371,7 +8380,7 @@ var _aaronjameslang$autoneologism_demo$Main$resultView = function (anlResult) {
 						{
 							ctor: '::',
 							_0: _elm_lang$html$Html$text(
-								A2(_elm_lang$core$String$join, ' ', _p1.words)),
+								A2(_elm_lang$core$String$join, ' ', _p2.words)),
 							_1: {ctor: '[]'}
 						}),
 					_1: {ctor: '[]'}
@@ -8385,20 +8394,20 @@ var _aaronjameslang$autoneologism_demo$Main$Model = F2(
 	});
 var _aaronjameslang$autoneologism_demo$Main$update = F2(
 	function (msg, model) {
-		var _p2 = msg;
-		if (_p2.ctor === 'TextInMsg') {
-			var _p3 = _p2._0;
+		var _p3 = msg;
+		if (_p3.ctor === 'TextInMsg') {
+			var _p4 = _p3._0;
 			return {
 				ctor: '_Tuple2',
 				_0: A2(
 					_aaronjameslang$autoneologism_demo$Main$Model,
 					{
-						words: _elm_lang$core$String$words(_p3)
+						words: _elm_lang$core$String$words(_p4)
 					},
 					_elm_lang$core$Maybe$Nothing),
 				_1: _aaronjameslang$autoneologism_demo$Autoneologism$generateWords(
 					{
-						words: _elm_lang$core$String$words(_p3)
+						words: _elm_lang$core$String$words(_p4)
 					})
 			};
 		} else {
@@ -8407,7 +8416,7 @@ var _aaronjameslang$autoneologism_demo$Main$update = F2(
 				_0: _elm_lang$core$Native_Utils.update(
 					model,
 					{
-						result: _elm_lang$core$Maybe$Just(_p2._0)
+						result: _elm_lang$core$Maybe$Just(_p3._0)
 					}),
 				_1: _elm_lang$core$Platform_Cmd$none
 			};
@@ -8474,7 +8483,7 @@ var _aaronjameslang$autoneologism_demo$Main$main = _elm_lang$html$Html$program(
 		init: _aaronjameslang$autoneologism_demo$Main$init,
 		view: _aaronjameslang$autoneologism_demo$Main$view,
 		update: _aaronjameslang$autoneologism_demo$Main$update,
-		subscriptions: function (_p4) {
+		subscriptions: function (_p5) {
 			return _aaronjameslang$autoneologism_demo$Autoneologism$generatedWords(_aaronjameslang$autoneologism_demo$Main$AnlResultMsg);
 		}
 	})();

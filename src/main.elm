@@ -67,7 +67,11 @@ resultView anlResult =
     ]
 
 floatToPercentage: Float -> String
-floatToPercentage f = String.left 2 (toString <| f * 100)  ++ "%"
+floatToPercentage =
+     (*) 100
+  >> round
+  >> toString
+  >> flip (++) "%"
 
 efficiencyColourAttribute : Float -> Html.Attribute msg
 efficiencyColourAttribute f = Html.Attributes.style [("background-color", "hsl(" ++ toString(round <| f*360) ++ ", 100%, 75%)")]
