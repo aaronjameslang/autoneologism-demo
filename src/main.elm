@@ -1,7 +1,6 @@
-import Html exposing (Html, button, div, text, li, ul, p)
-import Html.Attributes exposing (..)
-import Html.Events exposing (onClick, onInput)
+import Html
 import Autoneologism as Anl
+import View
 
 main : Program Never Model Msg
 main =
@@ -46,32 +45,5 @@ update msg model =
       , Cmd.none
     )
 
--- VIEW
-
-view : Model -> Html Msg
-view model =
-  div [] [
-    Html.form [] [
-      Html.textarea [ cols 100, rows 20, onInput TextInMsg ] [ text <| String.join " " model.params.words ]
-    ],
-    resultView model.result
-  ]
-
-resultView: Maybe Anl.Result -> Html msg
-resultView anlResult =
-  case anlResult of
-    Nothing -> p [] [text "Caculating"]
-    Just result -> div []
-      [ p [efficiencyColourAttribute result.efficiency] [text ("Efficiency " ++ floatToPercentage result.efficiency)]
-      , p [] [text <| String.join " " result.words]
-    ]
-
-floatToPercentage: Float -> String
-floatToPercentage =
-     (*) 100
-  >> round
-  >> toString
-  >> flip (++) "%"
-
-efficiencyColourAttribute : Float -> Html.Attribute msg
-efficiencyColourAttribute f = Html.Attributes.style [("background-color", "hsl(" ++ toString(round <| f*360) ++ ", 100%, 75%)")]
+view : Model -> Html.Html Msg
+view model = View.view model.params model.result TextInMsg
