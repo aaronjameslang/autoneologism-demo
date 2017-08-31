@@ -1,5 +1,5 @@
-import Html
 import Autoneologism as Anl
+import Html
 import View
 
 main : Program Never Model Msg
