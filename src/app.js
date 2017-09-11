@@ -1,9 +1,10 @@
 const Elm = require('../main.js')
 const anl = require('autoneologism')
 
-const app = Elm.Main.fullscreen()
+const parametersApp = Elm.ParametersApp.embed(document.getElementsByClassName('params')[0])
+const    resultsApp = Elm.   ResultsApp.embed(document.getElementsByClassName('results')[0])
 
-app.ports.generateWords.subscribe(params => {
-  const result = anl.generateWords(params.words);
-  app.ports.generatedWords.send(result);
+parametersApp.ports.generateWords.subscribe(params => {
+  const result = anl.generateWords(params.wordsIn);
+  resultsApp.ports.generatedWords.send(result);
 });

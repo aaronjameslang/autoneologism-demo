@@ -1,34 +1,38 @@
-module View exposing (view)
+module ResultsApp exposing (main)
 
 import Html exposing (Html, button, div, text, li, ul, p)
-import Html.Attributes exposing (..)
-import Html.Events
+import Html.Attributes as Attr exposing (..)
 import Autoneologism as Anl
-import Bootstrap.Grid as Grid
 
-view : Anl.Params -> Maybe Anl.Result -> (String -> msg) -> Html msg
-view p mr handler =
-  Grid.container [] [
-    Grid.row [] [
-      Grid.col [] [paramsToHtml p handler]
-    ], Grid.row [] [
-      Grid.col [] [maybeResultToHtml mr]
-    ]
-  ]
+main : Program Never Model Msg
+main =
+  Html.program
+    { init = init
+    , view = view
+    , update = update
+    , subscriptions = \_ -> Anl.generatedWords Msg
+    }
 
-paramsToHtml : Anl.Params -> (String -> msg) -> Html msg
-paramsToHtml p handler = Html.textarea
-  [ cols 100, rows 20, Html.Events.onInput handler ]
-  [ text <| String.join " " p.words ]
+type alias Model = Maybe Anl.Results
+type Msg = Msg Anl.Results
 
-maybeResultToHtml : Maybe Anl.Result -> Html msg
-maybeResultToHtml mr =
+init : (Model, Cmd msg)
+init = (Nothing, Cmd.none)
+
+update : Msg -> Model -> (Model, Cmd msg)
+update msg _ =
+  case msg of
+    Msg result ->
+      ( Just result, Cmd.none )
+
+view : Model -> Html msg
+view mr =
   case mr of
     Nothing -> p [] [text "Calculating..."]
-    Just r -> resultToHtml r
+    Just r -> viewResult r
 
-resultToHtml : Anl.Result -> Html msg
-resultToHtml result =
+viewResult : Anl.Results -> Html msg
+viewResult result =
     div [] [efficiencyToHtml result.efficiency, wordsOutToHtml result.words]
 
 efficiencyToHtml : Float -> Html msg
@@ -49,7 +53,7 @@ floatToHue = round << (*) 360 -- try <|
 
 floatToColourAttr : Float -> Html.Attribute msg
 floatToColourAttr f =
-  Html.Attributes.style [(
+  Attr.style [(
     "background-color",
     "hsl(" ++ toString (floatToHue f) ++ ", 100%, 75%)"
   )]
