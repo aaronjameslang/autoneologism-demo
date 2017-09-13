@@ -46,17 +46,24 @@ view p = Html.form []
   [ Html.textarea
       [ cols 100, rows 20, Events.onInput TextInMsg ]
       [ text <| String.join " " p.wordsIn ]
-  , viewRadioButton 3
-  , viewRadioButton 4
-  , viewRadioButton 5
+  , Html.fieldset []
+    [ viewRadioButton 2
+    , viewRadioButton 3
+    , viewRadioButton 4
+    , viewRadioButton 5
+    , viewRadioButton 6
+    ]
   ]
 
 viewRadioButton : Int -> Html.Html Msg
 viewRadioButton value =
-  Html.input
-    [ Attr.type_ "radio"
-    , Attr.name "link-length"
-    , Attr.value <| toString value
-    , Events.onClick <| LinkLengthMsg value
+  Html.label []
+    [ Html.text <| toString value
+    , Html.input
+      [ Attr.type_ "radio"
+      , Attr.name "link-length"
+      , Attr.value <| toString value
+      , Events.onClick <| LinkLengthMsg value
+      ]
+      [ Html.text <| toString value ]
     ]
-    [ Html.text <| toString value ]

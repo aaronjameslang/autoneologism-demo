@@ -8332,31 +8332,43 @@ var _aaronjameslang$autoneologism_demo$ParametersApp$LinkLengthMsg = function (a
 };
 var _aaronjameslang$autoneologism_demo$ParametersApp$viewRadioButton = function (value) {
 	return A2(
-		_elm_lang$html$Html$input,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$type_('radio'),
-			_1: {
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$name('link-length'),
-				_1: {
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$value(
-						_elm_lang$core$Basics$toString(value)),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$html$Html_Events$onClick(
-							_aaronjameslang$autoneologism_demo$ParametersApp$LinkLengthMsg(value)),
-						_1: {ctor: '[]'}
-					}
-				}
-			}
-		},
+		_elm_lang$html$Html$label,
+		{ctor: '[]'},
 		{
 			ctor: '::',
 			_0: _elm_lang$html$Html$text(
 				_elm_lang$core$Basics$toString(value)),
-			_1: {ctor: '[]'}
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$input,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$type_('radio'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$name('link-length'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$value(
+									_elm_lang$core$Basics$toString(value)),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Events$onClick(
+										_aaronjameslang$autoneologism_demo$ParametersApp$LinkLengthMsg(value)),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(
+							_elm_lang$core$Basics$toString(value)),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
 		});
 };
 var _aaronjameslang$autoneologism_demo$ParametersApp$TextInMsg = function (a) {
@@ -8398,16 +8410,31 @@ var _aaronjameslang$autoneologism_demo$ParametersApp$view = function (p) {
 				}),
 			_1: {
 				ctor: '::',
-				_0: _aaronjameslang$autoneologism_demo$ParametersApp$viewRadioButton(3),
-				_1: {
-					ctor: '::',
-					_0: _aaronjameslang$autoneologism_demo$ParametersApp$viewRadioButton(4),
-					_1: {
+				_0: A2(
+					_elm_lang$html$Html$fieldset,
+					{ctor: '[]'},
+					{
 						ctor: '::',
-						_0: _aaronjameslang$autoneologism_demo$ParametersApp$viewRadioButton(5),
-						_1: {ctor: '[]'}
-					}
-				}
+						_0: _aaronjameslang$autoneologism_demo$ParametersApp$viewRadioButton(2),
+						_1: {
+							ctor: '::',
+							_0: _aaronjameslang$autoneologism_demo$ParametersApp$viewRadioButton(3),
+							_1: {
+								ctor: '::',
+								_0: _aaronjameslang$autoneologism_demo$ParametersApp$viewRadioButton(4),
+								_1: {
+									ctor: '::',
+									_0: _aaronjameslang$autoneologism_demo$ParametersApp$viewRadioButton(5),
+									_1: {
+										ctor: '::',
+										_0: _aaronjameslang$autoneologism_demo$ParametersApp$viewRadioButton(6),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					}),
+				_1: {ctor: '[]'}
 			}
 		});
 };
