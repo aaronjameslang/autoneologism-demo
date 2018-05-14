@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "autoneologism": "aaronjameslang/autoneologism",
-    "browserify": "^14.4.0",
+    "autoneologism": "github:aaronjameslang/autoneologism",
+    "browserify": "^16.2.2",
     "elm": "^0.18.0"
   }
 }
